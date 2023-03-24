@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <project name="example" default="print">
 	<property file="./build.properties"/>
+	<patternset id="files.java">
+			<include name="**/*.java"/>
+	</patternset>
 	
 	<target name="print">
 		<echo>Son's Name: ${print.son}</echo>
@@ -9,12 +12,21 @@
 	</target>
 	
 	<target name="moveFiles" depends="print">
-		<copy todir="${moveFiles.targetDirectory}">
-			<fileset dir="${moveFiles.sourceDirectory}" casesensitive="yes">
+		<copy todir="${targetDirectory}">
+			<fileset dir="${sourceDirectory}" casesensitive="yes">
 				<include name="**/*.txt"/>
 				<exclude name="**/*.TxT"/>
 			</fileset>
 		</copy>
 	</target>
+
+	<target name="patternSet">
+		<copy todir="${targetDirectory}">
+			<fileset dir="${sourceDirectory}" casesensitive="yes">
+				<patternset refid="files.java"/>
+			</fileset>
+		</copy>
+	</target>
+
 </project>
 
