@@ -4,14 +4,28 @@
 	<patternset id="files.java">
 			<include name="**/*.java"/>
 	</patternset>
+	<patternset id="files.all">
+		<include name="**/*.*"/>
+	</patternset>
 	
 	<target name="print">
+		<echo>Printing names</echo>
 		<echo>Son's Name: ${print.son}</echo>
 		<echo>Father's Name: ${print.father}</echo>
 		<echo>Mother's Name: ${print.mother}</echo>
 	</target>
 	
-	<target name="moveFiles" depends="print">
+	<target name="clearTargetDirectory">
+		<echo>Deleting all files from "to" directory</echo>
+		<delete>
+			<fileset dir="${targetDirectory}" casesensitive="no">
+				<patternset refid="files.all"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="moveFiles" depends="clearTargetDirectory">
+		<echo>Copying files using fileset</echo>
 		<copy todir="${targetDirectory}">
 			<fileset dir="${sourceDirectory}" casesensitive="yes">
 				<include name="**/*.txt"/>
@@ -20,7 +34,8 @@
 		</copy>
 	</target>
 
-	<target name="patternSet">
+	<target name="patternSet" depends="clearTargetDirectory">
+		<echo>Copying files using patternset</echo>
 		<copy todir="${targetDirectory}">
 			<fileset dir="${sourceDirectory}" casesensitive="yes">
 				<patternset refid="files.java"/>
@@ -28,5 +43,16 @@
 		</copy>
 	</target>
 
+	<target name="filtering" depends="clearTargetDirectory">
+		<echo>Replacing tokens in file using filter</echo>
+		<copy todir="$targetDirectory">
+			<fileset dir="${targetDirectory}" casesensitive="yes">
+				<include name="${sourceDirectory}/*.about"/>
+			</fileset>
+			<filterset>
+				<filter token="@@version@@" value="1.0.0"/>
+			</filterset>
+		</copy>
+	</target>
 </project>
 
