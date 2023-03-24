@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<project name="example" default="print">
+	<property file="./build.properties"/>
+	
+	<target name="print">
+		<echo>Son's Name: ${print.son}</echo>
+		<echo>Father's Name: ${print.father}</echo>
+		<echo>Mother's Name: ${print.mother}</echo>
+	</target>
+	
+	<target name="moveFiles" depends="print">
+		<copy todir="${moveFiles.targetDirectory}">
+			<fileset dir="${moveFiles.sourceDirectory}" casesensitive="yes">
+				<include name="**/*.txt"/>
+				<exclude name="**/*.TxT"/>
+			</fileset>
+		</copy>
+	</target>
+</project>
+
