@@ -9,7 +9,7 @@ public class WoodenFrame implements Frame {
         this.installedPicture = picture;
     }
 
-    public Picture getInstallPicture() {
+    public Picture getInstalledPicture() {
         return this.installedPicture;
     }
 
@@ -25,7 +25,7 @@ public class WoodenFrame implements Frame {
 
     @Override
     public String inspectPicture() {
-        return getInstallPicture().getPictureInfo();
+        return getInstalledPicture().getPictureInfo();
     }
 
 }
